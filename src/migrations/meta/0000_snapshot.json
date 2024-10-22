@@ -1,0 +1,467 @@
+{
+  "id": "dae0936d-46e1-4e88-8dd5-c0d279ffd185",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.Author": {
+      "name": "Author",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(12)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "uniqueAuthor": {
+          "name": "uniqueAuthor",
+          "columns": [
+            {
+              "expression": "name",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.Chapter": {
+      "name": "Chapter",
+      "schema": "",
+      "columns": {
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "issue": {
+          "name": "issue",
+          "type": "numeric(6, 1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "novelId": {
+          "name": "novelId",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "Chapter_novelId_Novel_id_fk": {
+          "name": "Chapter_novelId_Novel_id_fk",
+          "tableFrom": "Chapter",
+          "tableTo": "Novel",
+          "columnsFrom": [
+            "novelId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "novel_issue_chapter_pk": {
+          "name": "novel_issue_chapter_pk",
+          "columns": [
+            "novelId",
+            "issue"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.Genre": {
+      "name": "Genre",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(12)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "uniqueGenre": {
+          "name": "uniqueGenre",
+          "columns": [
+            {
+              "expression": "name",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.NovelGenre": {
+      "name": "NovelGenre",
+      "schema": "",
+      "columns": {
+        "novelId": {
+          "name": "novelId",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "genreId": {
+          "name": "genreId",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "NovelGenre_novelId_Novel_id_fk": {
+          "name": "NovelGenre_novelId_Novel_id_fk",
+          "tableFrom": "NovelGenre",
+          "tableTo": "Novel",
+          "columnsFrom": [
+            "novelId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "NovelGenre_genreId_Genre_id_fk": {
+          "name": "NovelGenre_genreId_Genre_id_fk",
+          "tableFrom": "NovelGenre",
+          "tableTo": "Genre",
+          "columnsFrom": [
+            "genreId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "novel_genre_pk": {
+          "name": "novel_genre_pk",
+          "columns": [
+            "novelId",
+            "genreId"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.Novel": {
+      "name": "Novel",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(12)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "novel_slug": {
+          "name": "novel_slug",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rating": {
+          "name": "rating",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "ratingCount": {
+          "name": "ratingCount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "yearOfPublication": {
+          "name": "yearOfPublication",
+          "type": "varchar(4)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "imageUrl": {
+          "name": "imageUrl",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "authorId": {
+          "name": "authorId",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "publisherId": {
+          "name": "publisherId",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "uniqueNovel": {
+          "name": "uniqueNovel",
+          "columns": [
+            {
+              "expression": "novel_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "Novel_authorId_Author_id_fk": {
+          "name": "Novel_authorId_Author_id_fk",
+          "tableFrom": "Novel",
+          "tableTo": "Author",
+          "columnsFrom": [
+            "authorId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "Novel_publisherId_Publisher_id_fk": {
+          "name": "Novel_publisherId_Publisher_id_fk",
+          "tableFrom": "Novel",
+          "tableTo": "Publisher",
+          "columnsFrom": [
+            "publisherId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.NovelTag": {
+      "name": "NovelTag",
+      "schema": "",
+      "columns": {
+        "novelId": {
+          "name": "novelId",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tagId": {
+          "name": "tagId",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "NovelTag_novelId_Novel_id_fk": {
+          "name": "NovelTag_novelId_Novel_id_fk",
+          "tableFrom": "NovelTag",
+          "tableTo": "Novel",
+          "columnsFrom": [
+            "novelId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "NovelTag_tagId_Tag_id_fk": {
+          "name": "NovelTag_tagId_Tag_id_fk",
+          "tableFrom": "NovelTag",
+          "tableTo": "Tag",
+          "columnsFrom": [
+            "tagId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "novel_tag_pk": {
+          "name": "novel_tag_pk",
+          "columns": [
+            "novelId",
+            "tagId"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.Publisher": {
+      "name": "Publisher",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(12)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "uniquePublisher": {
+          "name": "uniquePublisher",
+          "columns": [
+            {
+              "expression": "name",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.Tag": {
+      "name": "Tag",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(12)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "uniqueTag": {
+          "name": "uniqueTag",
+          "columns": [
+            {
+              "expression": "name",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -11,6 +11,16 @@ import {
     getNovelBySlug,
     deleteAllData
 } from "./index.js";
+import {generateShortId} from "./schema";
+
+
+function test_shortIdGeneration(){
+    for (let i = 0; i < 10; i++) {
+
+        console.log( generateShortId());
+    }
+}
+
 //Test  the above functions
 (async function () {
 
